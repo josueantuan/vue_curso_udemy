@@ -15,8 +15,54 @@ const actions = {
             Vue.http.post('login', {user: userInput})
             .then(user => {
                 window.localStorage.setItem(user.body.token);
+                commit(types.mutations.setUser);
+                resolve(user);
+            })
+            .catch(error => {
+                reject(error);
+            })
+            .finally(() => {
+                commit(globalTypes.mutations.startProcessing);
             })
         });
+    },
+    [types.actions.register]: ({commit}, userInput) => {
+        commit(globalTypes.mutations.startProcessing);
+
+        return new Promise((resolve,reject) => {
+            Vue.http.post('register', {user: userInput})
+            .then(user => {
+                resolve(user);
+            })
+            .catch(error => {
+                reject(error);
+            })
+            .finally(() => {
+                commit(globalTypes.mutations.startProcessing);
+            })
+        })
+    },
+    [types.actions.updateProfile]: ({commit},userInput) => {
+        commit(globalTypes.mutations.startProcessing);
+
+        return new Promise((resolve,reject) => {
+            Vue.http.put('profile', {user: userInput})
+            .then(user => {
+                window.localStorage.setItem(user.body.token);
+                commit(types.mutations.setUser);
+                resolve(user);
+            })
+            .catch(error => {
+                reject(error);
+            })
+            .finally(() => {
+                commit(globalTypes.mutations.startProcessing);
+            })
+        });
+    },
+    [types.actions.logout]: ({commit}) => {
+        window.localStorage.removeItem('_token');
+        commit(types.mutations.setUser);
     }
 };
 
