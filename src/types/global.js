@@ -10,7 +10,7 @@ export default namespace('global',{
         'language'
     ],
     mutations: [
-        'starProcessing',
+        'startProcessing',
         'stopProcessing',
         'setLanguage'
     ]

@@ -10,7 +10,7 @@ const state = {
 const actions = {
     [types.actions.login]: ({commit},userInput) => {
         commit(globalTypes.mutations.startProcessing);
-
+        console.log('esta aqui');
         return new Promise((resolve,reject) => {
             Vue.http.post('login', {user: userInput})
             .then(user => {

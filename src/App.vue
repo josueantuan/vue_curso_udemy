@@ -1,60 +1,82 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <navigation></navigation>
+    <div v-if="processing">
+      <BlockUI :message="$t('messages.processing')"></BlockUI>
+    </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import globalTypes from "./types/global";
+import { mapGetters } from "vuex";
+import navigation from "./components/Navigation";
 export default {
-  name: 'app',
-  data () {
+  components: {
+    navigation
+  },
+  name: "app",
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+      msg: "Welcome to Your Vue.js App"
+    };
+  },
+  computed: {
+    ...mapGetters({
+      processing: globalTypes.getters.processing
+    })
   }
-}
+};
 </script>
 
 <style>
+body {
+  background-color: #36383a !important;
+}
+
+.well {
+  background-color: #fff !important;
+}
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
-h1, h2 {
-  font-weight: normal;
+h1,
+h3,
+h4,
+p {
+  color: #fff !important;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
+h2,
 a {
-  color: #42b983;
+  color: #e33a2d !important;
+}
+
+th,
+td {
+  color: #e33a2d !important;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+td {
+  background-color: #fff;
+}
+
+hr {
+  border: 1px solid #e33a2d !important;
+  width: 100%;
+}
+
+.page-link.active {
+  background-color: #d24839 !important;
+  color: #fff !important;
+  border: 1px solid #fff !important;
 }
 </style>
