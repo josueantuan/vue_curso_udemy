@@ -8,24 +8,23 @@ const state = {
 };
 
 const actions = {
-    [types.actions.login]: ({commit},userInput) => {
+    [types.actions.login]: ({commit}, userInput) => {
         commit(globalTypes.mutations.startProcessing);
-        console.log('esta aqui');
-        return new Promise((resolve,reject) => {
-            Vue.http.post('login', {user: userInput})
+        return new Promise((resolve, reject) => {
+          Vue.http.post('login', {user: userInput})
             .then(user => {
-                window.localStorage.setItem(user.body.token);
+                window.localStorage.setItem('_token', user.body.token);
                 commit(types.mutations.setUser);
                 resolve(user);
             })
             .catch(error => {
-                reject(error);
+              reject(error);
             })
             .finally(() => {
-                commit(globalTypes.mutations.startProcessing);
+              commit(globalTypes.mutations.stopProcessing);
             })
-        });
-    },
+        })
+      },
     [types.actions.register]: ({commit}, userInput) => {
         commit(globalTypes.mutations.startProcessing);
 
